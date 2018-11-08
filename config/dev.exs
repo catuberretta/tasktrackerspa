@@ -68,8 +68,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
 config :task_tracker_spa, TaskTrackerSpa.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "task_trackerspa",
+  password: "cajubema",
   database: "task_tracker_spa_dev",
   hostname: "localhost",
   pool_size: 10
