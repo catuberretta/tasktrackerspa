@@ -46,7 +46,7 @@ class TasksList extends React.Component {
     let createTask = () => {
         let state1 = _.assign({}, this.state.newTask, {name:"", description:"", completed: false, timespent:0, user_id:1});
         this.setState({newTask: state1});
-        api.create_task(this.state.newTask)
+        api.create_task(this.state.newTask, session.token)
     }
 
     let new_assignUser = (ev) => {
@@ -172,9 +172,9 @@ class TasksList extends React.Component {
                         desc: this.state.desc, 
                         timeSpent: this.state.timeSpent,
                         completed: this.state.completed,
-                        user_id: this.state.user_id})} 
+                        user_id: this.state.user_id}, session.token)} 
                         className="btn btn-primary">Save Edited Task</button>
-                    <button onClick={() => api.delete_task(task.id)} className="btn btn-warning">Delete Task</button>
+                    <button onClick={() => api.delete_task(task.id, session.token)} className="btn btn-warning">Delete Task</button>
                 </div>
             </div>
 

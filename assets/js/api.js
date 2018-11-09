@@ -29,36 +29,36 @@ fetch_tasks() {
     });
   }
 
-  delete_task(id) {
+  delete_task(id, token) {
     $.ajax("/api/v1/tasks/" + id, {
       method: "delete",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: "",
+      data: JSON.stringify({token: token}),
       success: (resp) => {
         this.fetch_tasks()
       },
     });
   }
 
-  create_task(newTask) {
+  create_task(newTask, token) {
     $.ajax("/api/v1/tasks/", {
       method: "post",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: JSON.stringify({task: newTask}),
+      data: JSON.stringify({task: newTask, token: token}),
       success: (resp) => {
         this.fetch_tasks()
       },
     });
   }
 
-    edit_task(id, newTask) {
+    edit_task(id, newTask, token) {
     $.ajax("/api/v1/tasks/" + id, {
       method: "put",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: JSON.stringify({id: id, task: newTask}),
+      data: JSON.stringify({id: id, task: newTask, token: token}),
       success: (resp) => {
         this.fetch_tasks()
       },

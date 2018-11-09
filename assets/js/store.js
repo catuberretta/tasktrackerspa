@@ -6,7 +6,7 @@ function session(state0 = null, action) {
     case 'NEW_SESSION':
       return action.data;
     case 'LOGOUT_OF_SESSION':
-      return state0;
+      return action.data;
     default:
       return state0;
     }
