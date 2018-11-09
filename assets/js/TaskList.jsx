@@ -14,9 +14,6 @@ class TasksList extends React.Component {
     render() {
     let {task, users, session} = this.props;
     let alltasks = _.map(this.props.tasks, (p) => <Task key={p.id} task={p} users={users} session={session}/>);
-    
-    console.log("Session ID")
-    console.log(session)
 
     let new_taskName = (ev) => {
         let task = this.state.newTask;
@@ -115,6 +112,7 @@ class TasksList extends React.Component {
     }
 
     render() {
+    let {task, users, session} = this.props;
 
     let editTaskTitle = (ev) => {
         let state1 = _.assign({}, this.state, {name: ev.target.value})
@@ -145,8 +143,12 @@ class TasksList extends React.Component {
         return user.id == session.user_id ? <option key={user.id} value={user.id} defaultValue>{user.email}</option> : <option key={user.id} value={user.id}>{user.email}</option>;
     };
 
+    let newTimeSpent = session.user_id == task.user_id ?
+    <div className="form-group">
+    <input type="number" step="15" className="form-control" value={this.state.timeSpent} onChange={editTaskTime}/>
+    </div>
+    : <div className="form-group">Time spent: {task.timeSpent}</div>;
 
-    let {task, users, session} = this.props;
     return <div className="card col-4">
                 <div className="card-body">
                     <div className="form-group">
@@ -155,9 +157,7 @@ class TasksList extends React.Component {
                     <div className="form-group">
                         <input type="text" className="form-control" value={this.state.desc} onChange={editTaskDesc}/>
                     </div>
-                    <div className="form-group">
-                    <input type="number" step="15" className="form-control" value={this.state.timeSpent} onChange={editTaskTime}/>
-                    </div>
+                    {newTimeSpent}
                     <div className="form-group"> 
                         <label className="form-check-label" htmlFor="completed">Completed? </label>
                         <input type="checkbox" value={this.state.completed} onChange={editTaskCompleted}/>
