@@ -145,6 +145,7 @@ class TasksList extends React.Component {
 
     let newTimeSpent = session.user_id == task.user_id ?
     <div className="form-group">
+    <label htmlFor="time">Time Spent:</label>
     <input type="number" step="15" className="form-control" value={this.state.timeSpent} onChange={editTaskTime}/>
     </div>
     : <div className="form-group">Time spent: {task.timeSpent}</div>;

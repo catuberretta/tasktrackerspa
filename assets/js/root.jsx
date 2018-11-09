@@ -11,7 +11,7 @@ import TasksList from './TaskList';
 
 export default function root_init(node) {
   let prods = window.tasks;
-  let ConnectedRoot = connect((state) => state)(Root)
+  let ConnectedRoot = connect(state2props)(Root)
 
   ReactDOM.render(
     <Provider store={store}>
@@ -23,9 +23,6 @@ export default function root_init(node) {
 class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tasks: props.tasks,
-    };
 
     api.fetch_tasks();
     api.fetch_users();
@@ -33,11 +30,18 @@ class Root extends React.Component {
 
 
   render() {
+
+  let {session, users} = this.props;
+
+   let currentUser = (u) => {
+     return u.id == session.user_id ? u.email : null;
+   }
+    
     if (this.props.session) {
       return <div>
       <h1> Welcome back, friend.</h1>
-      <p>{this.props.session.user_id}</p>
-      <TasksList tasks={this.state.tasks} />
+      <p>{users.map(currentUser)}</p>
+      <TasksList />
       <button onClick={(e) => { e.preventDefault(); api.endSession()}} className="btn">Logout</button>
     </div>;
     }
@@ -71,4 +75,13 @@ function StarterPage(props) {
     </div>;
   }
 
+
+
+  function state2props(state) {
+    return {
+      users: state.users,
+      session: state.session
+    };
+  }
+  
 
