@@ -4,25 +4,85 @@ import _ from 'lodash';
 import api from './api';
 
 class TasksList extends React.Component {
-    render() {
-    let prods = _.map(this.props.tasks, (p) => <Task key={p.id} task={p} />);
-    return <div><div className="row">
-            <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="newTaskCollapse" aria-expanded="false" aria-controls="newTaskCollapse">
-            Create new task
-          </button>
-        </p>
-        <div class="collapse" id="newTaskCollapse">
-          <div class="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-          </div>
-        </div>
+    constructor(props) {
+        super(props);
+        this.state = {
+            newTask: {name:"", desc:"", completed: false, timeSpent:0, user_id:1}
+        }
+    }
 
+    render() {
+    let alltasks = _.map(this.props.tasks, (p) => <Task key={p.id} task={p} />);
+    
+    let new_taskName = (ev) => {
+        let task = this.state.newTask;
+        task.name = ev.target.value;
+        let state1 = _.assign({}, this.state, { newTask: task });
+        this.setState(state1);
+    }    
+
+    let new_taskDesc = (ev) => {
+        let task = this.state.newTask;
+        task.desc = ev.target.value;
+        let state1 = _.assign({}, this.state, { newTask: task });
+        this.setState(state1);
+    }   
+
+    let new_taskTime = (ev) => {
+        let task = this.state.newTask;
+        task.timeSpent = ev.target.value;
+        let state1 = _.assign({}, this.state, { newTask: task });
+        this.setState(state1);
+    }   
+    
+    let new_taskCompleted = (ev) => {
+        let task = this.state.newTask;
+        task.Completed = ev.target.value;
+        let state1 = _.assign({}, this.state, { newTask: task });
+        this.setState(state1);
+    } 
+
+    let createTask = () => {
+        let state1 = _.assign({}, this.state.newTask, {name:"", description:"", completed: false, timespent:0, user_id:1});
+        this.setState({newTask: state1});
+        api.create_task(this.state.newTask)
+    }
+    
+    return <div>
+    <div className="card">
+    <div className="card-header">New Task</div>
+    <div className="card-body">
+        <form>
+            <div className="form-group">
+                <label htmlFor="name">Title</label>
+                <input type="text" className="form-control" value={this.state.newTask.name} onChange={new_taskName}/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="desc">Description</label>
+                <input type="text" className="form-control" value={this.state.newTask.desc} onChange={new_taskDesc}/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="time">Time Spent:</label>
+                <input type="number" step={15} className="form-control" value={this.state.newTask.timeSpent} onChange={new_taskTime}/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="completed">Completed?</label>
+                <input type="checkbox" value={this.state.newTask.Completed} onChange={new_taskCompleted}/>
+            </div>
+        </form>
+        <button className="btn btn-info" onClick={createTask}>Create Task</button>
         </div>
-        <div className="row">
-      {prods}
     </div>
-    </div>;
+ 
+
+    <div className="row">
+        {alltasks}
+    </div>
+
+    </div>
+    
+    
+   
     }
   }
 
@@ -46,22 +106,49 @@ class TasksList extends React.Component {
         this.setState(state1);
     }    
 
+    let editTaskDesc = (ev) => {
+        console.log(ev.target.value)
+        let state1 = _.assign({}, this.state, {desc: ev.target.value})
+        this.setState(state1);
+    }   
+
+    let editTaskTime = (ev) => {
+        console.log(ev.target.value)
+        let state1 = _.assign({}, this.state, {timeSpent: ev.target.value})
+        this.setState(state1);
+    }   
+    
+    let editTaskCompleted = (ev) => {
+        console.log(ev.target.value)
+        let state1 = _.assign({}, this.state, {completed: ev.target.value})
+        this.setState(state1);
+    } 
+
     let {task, users, session} = this.props;
     return <div className="card col-4">
-      <div className="card-body">
-        <input type="text" className="card-title" value={this.state.name} onChange={editTaskTitle}/>
-        <input type="text" className="card-text" value={this.state.desc}/>
-        <input type="number" className="form-control" value={this.state.timeSpent}/>
-        <input type="checkbox" value={this.state.completed}/>
-        <button onClick={() => api.edit_task(task.id, {name: this.state.name, 
-            desc: this.state.desc, 
-            timeSpent: this.state.timeSpent,
-            completed: this.state.completed,
-            user_id: this.state.user_id})} 
-            className="btn btn-primary">Save Edited Task</button>
-        <button onClick={() => api.delete_task(task.id)} className="btn btn-warning">Delete Task</button>
-      </div>
-    </div>;
+                <div className="card-body">
+                    <div className="form-group">
+                        <input type="text" className="card-title" value={this.state.name} onChange={editTaskTitle}/>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" value={this.state.desc} onChange={editTaskDesc}/>
+                    </div>
+                    <div className="form-group">
+                    <input type="number" step="15" className="form-control" value={this.state.timeSpent} onChange={editTaskTime}/>
+                    </div>
+                    <div className="form-group"> 
+                        <label className="form-check-label" htmlFor="completed">Completed? </label>
+                        <input type="checkbox" value={this.state.completed} onChange={editTaskCompleted}/>
+                    </div>
+                    <button onClick={() => api.edit_task(task.id, {name: this.state.name, 
+                        desc: this.state.desc, 
+                        timeSpent: this.state.timeSpent,
+                        completed: this.state.completed,
+                        user_id: this.state.user_id})} 
+                        className="btn btn-primary">Save Edited Task</button>
+                    <button onClick={() => api.delete_task(task.id)} className="btn btn-warning">Delete Task</button>
+                </div>
+            </div>
 
     }   
   }

@@ -41,12 +41,12 @@ fetch_tasks() {
     });
   }
 
-  create_task(id) {
-    $.ajax("/api/v1/tasks/" + id, {
+  create_task(newTask) {
+    $.ajax("/api/v1/tasks/", {
       method: "post",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: "",
+      data: JSON.stringify({task: newTask}),
       success: (resp) => {
         this.fetch_tasks()
       },
@@ -114,6 +114,15 @@ fetch_tasks() {
       }
     });
   }
+
+  endSession() {
+    let action = {
+      type: "LOGOUT_OF_SESSION",
+      data: null
+    }
+    store.dispatch(action);
+}
+
 
 
 

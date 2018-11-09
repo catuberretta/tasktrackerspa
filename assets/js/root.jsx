@@ -37,6 +37,7 @@ class Root extends React.Component {
       return <div>
       <h1> Welcome back, friend.</h1>
       <TasksList tasks={this.state.tasks} />
+      <button onClick={(e) => { e.preventDefault(); api.endSession()}} className="btn">Logout</button>
     </div>;
     }
     else {
@@ -58,15 +59,15 @@ function StarterPage(props) {
         Nevertheless, thank you for coming back. I hope you enjoy your stay.
       </p>
       <form>
-<div className="form-group">
-<input type="email" className="form-control" id="userEmail" type="email" placeholder="email" />
-<input type="password" className="form-control" id="userPassword" type="password" placeholder="password" />
-<button onClick={(e) => { e.preventDefault(); api.create_user()}} className="btn btn-primary">Register</button>
-<button onClick={(e) => { e.preventDefault(); api.create_session()}} className="btn btn-primary">Login</button>
-</div>
-</form> 
-  </div>
-</div>;
+    <div className="form-group">
+    <input type="email" className="form-control" id="userEmail" type="email" placeholder="email" />
+    <input type="password" className="form-control" id="userPassword" type="password" placeholder="password" />
+    <button onClick={(e) => { e.preventDefault(); api.create_user()}} className="btn btn-primary">Register</button>
+    <button onClick={(e) => { e.preventDefault(); api.create_session()}} className="btn btn-primary">Login</button>
+    </div>
+    </form> 
+      </div>
+    </div>;
   }
 
 
