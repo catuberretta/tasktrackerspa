@@ -25,22 +25,15 @@ function session(state0 = null, action) {
     switch (action.type) {
     case 'USER_LIST':
       return action.data;
-    case 'NEW_USER':
-        return state0;
-    case 'DELETE_USER':
-        return state0;
     default:
       return state0;
     }
   }
 
-  
-
-
 function root_reducer(state0, action) {
     console.log("reducer", state0, action);
   
-    let reducer = combineReducers({tasks, session});
+    let reducer = combineReducers({tasks, session, users});
     let state1 = reducer(state0, action);
   
     console.log("state1", state1);

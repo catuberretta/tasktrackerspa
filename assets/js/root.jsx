@@ -28,7 +28,7 @@ class Root extends React.Component {
     };
 
     api.fetch_tasks();
-    //api.fetch_users();
+    api.fetch_users();
   }
 
 
@@ -36,6 +36,7 @@ class Root extends React.Component {
     if (this.props.session) {
       return <div>
       <h1> Welcome back, friend.</h1>
+      <p>{this.props.session.user_id}</p>
       <TasksList tasks={this.state.tasks} />
       <button onClick={(e) => { e.preventDefault(); api.endSession()}} className="btn">Logout</button>
     </div>;
