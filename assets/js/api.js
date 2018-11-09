@@ -13,6 +13,7 @@ class TheServer {
       });
     }
 
+    // Tasks Database Calls
 fetch_tasks() {
     $.ajax("/api/v1/tasks", {
       method: "get",
@@ -28,6 +29,43 @@ fetch_tasks() {
     });
   }
 
+  delete_task(id) {
+    $.ajax("/api/v1/tasks/" + id, {
+      method: "delete",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: "",
+      success: (resp) => {
+        this.fetch_tasks()
+      },
+    });
+  }
+
+  create_task(id) {
+    $.ajax("/api/v1/tasks/" + id, {
+      method: "post",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: "",
+      success: (resp) => {
+        this.fetch_tasks()
+      },
+    });
+  }
+
+    edit_task(id, newTask) {
+    $.ajax("/api/v1/tasks/" + id, {
+      method: "put",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify({id: id, task: newTask}),
+      success: (resp) => {
+        this.fetch_tasks()
+      },
+    });
+  }
+
+      // User Database Calls
   fetch_users() {
     this.fetch_path(
       "/api/v1/users",
@@ -38,7 +76,7 @@ fetch_tasks() {
         });
       }
     );
-  }
+    }
 
   create_user() {
     let email = $('#userEmail').val()

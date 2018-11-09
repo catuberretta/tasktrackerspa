@@ -6,11 +6,12 @@ defmodule TaskTrackerSpa.Repo.Migrations.CreateTasks do
       add :name, :string, null: false
       add :desc, :text, null: false
       add :timeSpent, :integer
-      add :assignedTo, references(:users, on_delete: :delete_all)
+      add :completed, :boolean
+      add :user_id, references(:users, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create index(:tasks, [:assignedTo], unique: true)
+    create index(:tasks, [:user_id])
   end
 end

@@ -44,6 +44,8 @@ defmodule TaskTrackerSpa.MixProject do
       {:cowboy, "~> 2.5"},
       {:plug_cowboy, "~> 2.0"},
       {:distillery, "~> 2.0"},
+      {:comeonin, "~> 4.1"},
+      {:argon2_elixir, "~> 1.3"},
     ]
   end
 

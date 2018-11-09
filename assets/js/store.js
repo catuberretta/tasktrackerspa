@@ -16,12 +16,6 @@ function session(state0 = null, action) {
     switch (action.type) {
     case 'TASKS_LIST':
       return action.data;
-    case 'CREATE_TASK':
-      return action.data;
-    case 'EDIT_TASK':
-      return action.data;
-      case 'DELETE_TASK':
-      return action.data;
     default:
       return state0;
     }

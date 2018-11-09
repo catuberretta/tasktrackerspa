@@ -36,12 +36,6 @@ class Root extends React.Component {
     if (this.props.session) {
       return <div>
       <h1> Welcome back, friend.</h1>
-      <p> Yes. Here we are. Many have come and go, many tasks have been registered and done. 
-        You seek control over your life? And perhaps with Task Tracker 2, you found what you needed.
-        You may ask, what can this Task Tracker do that the others couldn't? Well, frankly, nothing. 
-        But! Be aware, this is a Single Page Application-- something Task Tracker 1 and 2 could NEVER EVEN DREAM of being. 
-        Ah, there I go again. Nevertheless, thank you for coming back. I hope you enjoy your stay.
-      </p>
       <TasksList tasks={this.state.tasks} />
     </div>;
     }
@@ -55,18 +49,23 @@ class Root extends React.Component {
 function StarterPage(props) {
   let {root} = props;
   return <div>
-  <div>
+  <div className="container">
     <h1>Task Tracker</h1>
-    <h1>Welcome!</h1>
+    <p> Yes. Here we are. Many have come and gone, many tasks have been registered and done, many have not. 
+        But still...something was missing. Perhaps with Task Tracker 2.0, you found what you were missing from Task Tracker 2.0.
+        So you may ask, what can this Task Tracker do that the others couldn't? Well, frankly, nothing. 
+        But! Be aware, this is a Single Page Application– something Task Tracker 1.0 and 2.0 could never even dream of being. 
+        Nevertheless, thank you for coming back. I hope you enjoy your stay.
+      </p>
+      <form>
+<div className="form-group">
+<input type="email" className="form-control" id="userEmail" type="email" placeholder="email" />
+<input type="password" className="form-control" id="userPassword" type="password" placeholder="password" />
+<button onClick={(e) => { e.preventDefault(); api.create_user()}} className="btn btn-primary">Register</button>
+<button onClick={(e) => { e.preventDefault(); api.create_session()}} className="btn btn-primary">Login</button>
+</div>
+</form> 
   </div>
-  <form>
-    <div className="form-group">
-    <input type="email" className="form-control" id="userEmail" type="email" placeholder="email" />
-    <input type="password" className="form-control" id="userPassword" type="password" placeholder="password" />
-    <button onClick={(e) => { e.preventDefault(); api.create_user()}} className="btn btn-primary">Register</button>
-    <button onClick={(e) => { e.preventDefault(); api.create_session()}} className="btn btn-primary">Login</button>
-    </div>
-  </form>
 </div>;
   }
 
